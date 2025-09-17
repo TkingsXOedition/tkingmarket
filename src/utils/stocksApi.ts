@@ -196,6 +196,15 @@ export const mockIndices: MarketIndex[] = [
 
 export const mockCurrencies: CurrencyPair[] = [
   {
+    symbol: 'XAU/USD',
+    fromCurrency: 'XAU',
+    toCurrency: 'USD',
+    rate: 2685.45,
+    change: 8.75,
+    changePercent: 0.33,
+    lastUpdated: new Date()
+  },
+  {
     symbol: 'EUR/USD',
     fromCurrency: 'EUR',
     toCurrency: 'USD',

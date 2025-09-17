@@ -11,9 +11,11 @@ import { StockCard } from '@/components/stocks/StockCard';
 import { StockChart } from '@/components/stocks/StockChart';
 import { MarketOverview } from '@/components/markets/MarketOverview';
 import { CurrencyExchange } from '@/components/currencies/CurrencyExchange';
+import { XauUsdAnalysis } from '@/components/currencies/XauUsdAnalysis';
 import { NewsCard } from '@/components/news/NewsCard';
 import { StatsCard } from '@/components/ui/StatsCard';
 import { BarChart3, TrendingDown, TrendingUp, Wallet2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export function Dashboard() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -58,23 +60,24 @@ export function Dashboard() {
         
         <main className="flex-1 transition-all duration-300">
           <div className="container max-w-full p-4 lg:p-6 animate-fade-in">
-            <h1 className="text-2xl font-bold mb-6">Market Dashboard</h1>
+            <h1 className="text-2xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TKINGBEAST Trading Platform</h1>
             
             {/* Stats Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 animate-slide-up" style={{ '--delay': '100ms' } as React.CSSProperties}>
               <StatsCard 
-                title="Market Cap" 
-                value="$13.42T"
-                trend={0.47}
+                title="XAU/USD Gold" 
+                value="$2,685.45"
+                trend={0.33}
+                trendLabel="+$8.75"
                 icon={<Wallet2 />}
-                className="bg-primary/5"
+                className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20"
               />
               <StatsCard 
-                title="Trading Volume" 
-                value="487.32M"
-                description="Today's volume"
+                title="Gold Volume" 
+                value="89.4M"
+                description="XAU/USD Daily"
                 icon={<BarChart3 />}
-                className="bg-primary/5"
+                className="bg-gradient-to-br from-secondary/10 to-primary/10 border-secondary/20"
               />
               <StatsCard 
                 title="Top Gainer" 
@@ -82,7 +85,7 @@ export function Dashboard() {
                 trend={topGainer.changePercent}
                 trendLabel={topGainer.name}
                 icon={<TrendingUp />}
-                className="bg-success/5"
+                className="bg-gradient-to-br from-success/10 to-success/5 border-success/20"
               />
               <StatsCard 
                 title="Top Loser" 
@@ -90,30 +93,34 @@ export function Dashboard() {
                 trend={topLoser.changePercent}
                 trendLabel={topLoser.name}
                 icon={<TrendingDown />}
-                className="bg-danger/5"
+                className="bg-gradient-to-br from-danger/10 to-danger/5 border-danger/20"
               />
             </div>
             
             {/* Main Content Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* Left column - Stock list */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+              {/* Left column - XAU/USD Analysis (Featured) */}
               <div className="lg:col-span-1 space-y-4 animate-slide-up" style={{ '--delay': '200ms' } as React.CSSProperties}>
-                <h2 className="text-xl font-semibold">Watchlist</h2>
+                <XauUsdAnalysis className="mb-4" />
                 <div className="space-y-4">
-                  {stocksWithHistory.slice(0, 5).map((stock) => (
+                  <h2 className="text-lg font-semibold">Quick Watchlist</h2>
+                  {stocksWithHistory.slice(0, 3).map((stock) => (
                     <StockCard 
                       key={stock.symbol} 
                       stock={stock} 
                       priceHistory={stock.priceHistory}
                       onClick={() => setSelectedStock(stock)}
-                      className={selectedStock.symbol === stock.symbol ? "ring-2 ring-primary" : ""}
+                      className={cn(
+                        "transition-all duration-300",
+                        selectedStock.symbol === stock.symbol ? "ring-2 ring-primary shadow-lg shadow-primary/20" : ""
+                      )}
                     />
                   ))}
                 </div>
               </div>
               
               {/* Middle column - Chart and news */}
-              <div className="lg:col-span-2 space-y-4 animate-slide-up" style={{ '--delay': '300ms' } as React.CSSProperties}>
+              <div className="lg:col-span-3 space-y-4 animate-slide-up" style={{ '--delay': '300ms' } as React.CSSProperties}>
                 <StockChart 
                   symbol={selectedStock.symbol} 
                   name={selectedStock.name} 
