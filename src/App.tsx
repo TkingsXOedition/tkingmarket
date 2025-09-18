@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthGuard } from "@/components/auth/AuthGuard";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Stocks from "./pages/Stocks";
@@ -24,21 +25,23 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/stocks" element={<Stocks />} />
-            <Route path="/markets" element={<Markets />} />
-            <Route path="/currencies" element={<Currencies />} />
-            <Route path="/global" element={<Global />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/performance" element={<Performance />} />
-            <Route path="/analysis" element={<Analysis />} />
-            <Route path="/settings" element={<Settings />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <AuthGuard>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/stocks" element={<Stocks />} />
+              <Route path="/markets" element={<Markets />} />
+              <Route path="/currencies" element={<Currencies />} />
+              <Route path="/global" element={<Global />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/performance" element={<Performance />} />
+              <Route path="/analysis" element={<Analysis />} />
+              <Route path="/settings" element={<Settings />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthGuard>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

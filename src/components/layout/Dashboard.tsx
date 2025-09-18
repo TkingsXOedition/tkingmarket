@@ -5,6 +5,8 @@ import {
   mockStocks, mockIndices, mockCurrencies, mockNews,
   generatePriceHistory 
 } from '@/utils/stocksApi';
+import { useLiveMarketData } from '@/hooks/useLiveMarketData';
+import { TradingBot } from '@/components/trading/TradingBot';
 import { Navbar } from '@/components/layout/Navbar';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { StockCard } from '@/components/stocks/StockCard';
@@ -25,6 +27,10 @@ export function Dashboard() {
   const stocks = useStockData(mockStocks);
   const indices = useMarketIndices(mockIndices);
   const currencies = useCurrencyPairs(mockCurrencies);
+  
+  // Live market data for key symbols
+  const liveSymbols = ['XAU/USD', 'EUR/USD', 'GBP/USD', 'AAPL', 'GOOGL', 'MSFT', 'BTC/USD', 'ETH/USD'];
+  const { marketData: liveMarketData, technicalData: liveTechnicalData } = useLiveMarketData(liveSymbols);
   
   // Generate chart data for the selected stock
   const selectedStockHistory = generatePriceHistory(30, selectedStock.price, 2);
@@ -101,7 +107,11 @@ export function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
               {/* Left column - XAU/USD Analysis (Featured) */}
               <div className="lg:col-span-1 space-y-4 animate-slide-up" style={{ '--delay': '200ms' } as React.CSSProperties}>
-                <XauUsdAnalysis className="mb-4" />
+                <XauUsdAnalysis 
+                  className="mb-4" 
+                  technicalData={liveTechnicalData['XAU/USD']}
+                  marketData={liveMarketData['XAU/USD']}
+                />
                 <div className="space-y-4">
                   <h2 className="text-lg font-semibold">Quick Watchlist</h2>
                   {stocksWithHistory.slice(0, 3).map((stock) => (
@@ -139,6 +149,9 @@ export function Dashboard() {
           </div>
         </main>
       </div>
+      
+      {/* Trading Bot */}
+      <TradingBot />
     </div>
   );
 }
