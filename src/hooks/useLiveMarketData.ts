@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+// Using simulated live data - can be upgraded to real APIs later
 
 interface LiveMarketData {
   symbol: string;
@@ -79,19 +79,9 @@ export const useLiveMarketData = (symbols: string[]) => {
     
     setMarketData(simulatedData);
     
-    // Store in Supabase for persistence
+    // Store in localStorage for demo persistence
     try {
-      const dataArray = Object.values(simulatedData).map(data => ({
-        symbol: data.symbol,
-        price: data.price,
-        change: data.change,
-        change_percent: data.changePercent,
-        volume: data.volume,
-        market_cap: data.marketCap,
-        last_updated: data.lastUpdated
-      }));
-
-      await supabase.from('market_data').upsert(dataArray);
+      localStorage.setItem('live_market_data', JSON.stringify(simulatedData));
     } catch (error) {
       console.error('Failed to store market data:', error);
     }
@@ -125,21 +115,9 @@ export const useLiveMarketData = (symbols: string[]) => {
     
     setTechnicalData(simulatedTechnical);
     
-    // Store in Supabase
+    // Store in localStorage for demo persistence
     try {
-      const dataArray = Object.values(simulatedTechnical).map(data => ({
-        symbol: data.symbol,
-        rsi: data.rsi,
-        macd: data.macd,
-        moving_average_20: data.movingAverage20,
-        volume_ratio: data.volumeRatio,
-        sentiment: data.sentiment,
-        buyer_volume_percent: data.buyerVolumePercent,
-        seller_volume_percent: data.sellerVolumePercent,
-        last_updated: data.lastUpdated
-      }));
-
-      await supabase.from('technical_indicators').upsert(dataArray);
+      localStorage.setItem('live_technical_data', JSON.stringify(simulatedTechnical));
     } catch (error) {
       console.error('Failed to store technical data:', error);
     }

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, Lock, AlertTriangle } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+// Using localStorage for demo - can be upgraded to Supabase later
 
 interface PasswordLoginProps {
   onSuccess: () => void;
@@ -44,13 +44,9 @@ export const PasswordLogin: React.FC<PasswordLoginProps> = ({ onSuccess }) => {
 
   const checkDeviceStatus = async (deviceId: string) => {
     try {
-      const { data, error } = await supabase
-        .from('device_attempts')
-        .select('attempts, blocked_until')
-        .eq('device_id', deviceId)
-        .single();
-
-      if (data) {
+      const stored = localStorage.getItem(`device_${deviceId}`);
+      if (stored) {
+        const data = JSON.parse(stored);
         const now = new Date();
         const blockedUntil = data.blocked_until ? new Date(data.blocked_until) : null;
         
@@ -69,16 +65,14 @@ export const PasswordLogin: React.FC<PasswordLoginProps> = ({ onSuccess }) => {
     const blockedUntil = block ? new Date(Date.now() + 24 * 60 * 60 * 1000) : null; // 24 hours block
     
     try {
-      const { error } = await supabase
-        .from('device_attempts')
-        .upsert({
-          device_id: deviceId,
-          attempts: newAttempts,
-          blocked_until: blockedUntil,
-          last_attempt: new Date().toISOString()
-        });
-
-      if (error) throw error;
+      const deviceData = {
+        device_id: deviceId,
+        attempts: newAttempts,
+        blocked_until: blockedUntil?.toISOString() || null,
+        last_attempt: new Date().toISOString()
+      };
+      
+      localStorage.setItem(`device_${deviceId}`, JSON.stringify(deviceData));
     } catch (error) {
       console.error('Error updating device attempts:', error);
     }
