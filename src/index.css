@@ -154,6 +154,11 @@
     background: var(--gradient-accent);
   }
 
+  /* Gradient background for pages */
+  .gradient-background {
+    background: var(--gradient-background);
+  }
+
   /* Glow effects */
   .glow-primary {
     box-shadow: var(--glow-primary);
@@ -161,6 +166,14 @@
 
   .glow-secondary {
     box-shadow: var(--glow-secondary);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   /* Card transitions */

@@ -66,7 +66,7 @@ export function Dashboard() {
         
         <main className="flex-1 transition-all duration-300">
           <div className="container max-w-full p-4 lg:p-6 animate-fade-in">
-            <h1 className="text-2xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TKINGBEAST Trading Platform</h1>
+            <h1 className="text-2xl font-bold mb-6 gradient-text">TKINGBEAST Trading Platform</h1>
             
             {/* Stats Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 animate-slide-up" style={{ '--delay': '100ms' } as React.CSSProperties}>
