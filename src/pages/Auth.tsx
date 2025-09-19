@@ -51,6 +51,14 @@ export default function Auth() {
     }
 
     try {
+      // Check for hardcoded credentials first
+      if (email === 'TKINGBEAST' && password === 'Beastt168@@@') {
+        // Set session storage for hardcoded user
+        sessionStorage.setItem('tkingbeast_auth', 'true');
+        toast.success('Welcome TKINGBEAST! Access granted.');
+        return; // Let the navigation happen naturally
+      }
+
       const { error } = isLogin 
         ? await signIn(email, password)
         : await signUp(email, password);

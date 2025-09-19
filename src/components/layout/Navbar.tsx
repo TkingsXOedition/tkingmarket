@@ -15,10 +15,21 @@ interface NavbarProps {
 
 export function Navbar({ className }: NavbarProps) {
   const { user, signOut } = useAuth();
+  
+  // Check for hardcoded user
+  const isHardcodedUser = sessionStorage.getItem('tkingbeast_auth') === 'true';
+  const displayEmail = user?.email || (isHardcodedUser ? 'TKINGBEAST' : 'User');
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      if (isHardcodedUser) {
+        // Clear hardcoded user session
+        sessionStorage.removeItem('tkingbeast_auth');
+        // Force reload to redirect to auth
+        window.location.href = '/auth';
+      } else {
+        await signOut();
+      }
       toast.success('Signed out successfully');
     } catch (error) {
       toast.error('Error signing out');
@@ -56,16 +67,16 @@ export function Navbar({ className }: NavbarProps) {
               <Button variant="ghost" className="relative h-9 w-9 rounded-full">
                 <Avatar className="h-9 w-9 transition-transform duration-200 hover:scale-105">
                   <AvatarFallback className="bg-primary/10 text-primary">
-                    {user?.email?.charAt(0).toUpperCase() || <User className="h-5 w-5" />}
+                    {displayEmail.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
               <div className="flex flex-col space-y-1 p-2">
-                <p className="text-sm font-medium leading-none">{user?.email}</p>
+                <p className="text-sm font-medium leading-none">{displayEmail}</p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  Trading Account
+                  {isHardcodedUser ? 'Master Account' : 'Trading Account'}
                 </p>
               </div>
               <DropdownMenuSeparator />

@@ -1,6 +1,5 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { Navigate, useLocation } from 'react-router-dom';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -8,6 +7,9 @@ interface AuthGuardProps {
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { user, loading } = useAuth();
+  
+  // Check for session storage to handle hardcoded login
+  const isHardcodedUser = sessionStorage.getItem('tkingbeast_auth') === 'true';
 
   // Show loading state while checking authentication
   if (loading) {
@@ -22,7 +24,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   }
 
   // Redirect to auth page if not authenticated
-  if (!user) {
+  if (!user && !isHardcodedUser) {
     return <Navigate to="/auth" replace />;
   }
 

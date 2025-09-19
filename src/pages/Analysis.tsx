@@ -5,6 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { mockStocks, mockCryptos, generatePriceHistory, formatNumber } from '@/utils/stocksApi';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Bitcoin, TrendingUp, TrendingDown } from 'lucide-react';
+import { TradingViewChart } from '@/components/trading/TradingViewChart';
 
 const Analysis = () => {
   // Mock data for sector performance
@@ -124,6 +125,33 @@ const Analysis = () => {
   
   return (
     <PageLayout title="Market Analysis">
+      {/* TradingView Style Charts Section */}
+      <div className="mb-8 space-y-6">
+        <TradingViewChart
+          symbol="BTC/USD"
+          title="Bitcoin"
+          currentPrice={67420.50}
+          change={1240.30}
+          changePercent={1.87}
+        />
+        
+        <TradingViewChart
+          symbol="ETH/USD"
+          title="Ethereum"
+          currentPrice={3205.80}
+          change={-85.20}
+          changePercent={-2.59}
+        />
+        
+        <TradingViewChart
+          symbol="XAU/USD"
+          title="Gold"
+          currentPrice={2015.40}
+          change={12.80}
+          changePercent={0.64}
+        />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-card rounded-lg p-6 shadow">
           <h2 className="text-xl font-semibold mb-4">Sector Performance (YTD)</h2>
