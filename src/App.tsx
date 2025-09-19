@@ -5,8 +5,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGuard } from "@/components/auth/AuthGuard";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import Stocks from "./pages/Stocks";
 import Markets from "./pages/Markets";
@@ -25,23 +27,28 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <AuthGuard>
+        <AuthProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/stocks" element={<Stocks />} />
-              <Route path="/markets" element={<Markets />} />
-              <Route path="/currencies" element={<Currencies />} />
-              <Route path="/global" element={<Global />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/performance" element={<Performance />} />
-              <Route path="/analysis" element={<Analysis />} />
-              <Route path="/settings" element={<Settings />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              {/* Public routes */}
+              <Route path="/auth" element={<Auth />} />
+              
+              {/* Protected routes */}
+              <Route path="/" element={<AuthGuard><Index /></AuthGuard>} />
+              <Route path="/stocks" element={<AuthGuard><Stocks /></AuthGuard>} />
+              <Route path="/markets" element={<AuthGuard><Markets /></AuthGuard>} />
+              <Route path="/currencies" element={<AuthGuard><Currencies /></AuthGuard>} />
+              <Route path="/global" element={<AuthGuard><Global /></AuthGuard>} />
+              <Route path="/portfolio" element={<AuthGuard><Portfolio /></AuthGuard>} />
+              <Route path="/performance" element={<AuthGuard><Performance /></AuthGuard>} />
+              <Route path="/analysis" element={<AuthGuard><Analysis /></AuthGuard>} />
+              <Route path="/settings" element={<AuthGuard><Settings /></AuthGuard>} />
+              
+              {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
-        </AuthGuard>
+        </AuthProvider>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
