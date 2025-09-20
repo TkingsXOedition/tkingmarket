@@ -1,444 +1,93 @@
 
-import React, { useState, useEffect } from 'react';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Treemap, LineChart, Line } from 'recharts';
-import { mockStocks, mockCryptos, generatePriceHistory, formatNumber } from '@/utils/stocksApi';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Bitcoin, TrendingUp, TrendingDown } from 'lucide-react';
-import { TradingViewChart } from '@/components/trading/TradingViewChart';
+import { CandlestickChart } from '@/components/trading/CandlestickChart';
+import { TrendingUp, TrendingDown, Activity, BarChart3 } from 'lucide-react';
 
 const Analysis = () => {
-  // Mock data for sector performance
-  const sectorPerformance = [
-    { name: 'Technology', value: 8.2 },
-    { name: 'Healthcare', value: 3.5 },
-    { name: 'Financials', value: -1.2 },
-    { name: 'Consumer', value: 2.8 },
-    { name: 'Energy', value: -2.5 },
-    { name: 'Materials', value: 0.9 },
-    { name: 'Utilities', value: -0.7 },
+  // Sample market data with more realistic prices
+  const marketData = [
+    {
+      symbol: 'BTC/USD',
+      title: 'Bitcoin',
+      currentPrice: 67834.50,
+      change: 2847.23,
+      changePercent: 4.38
+    },
+    {
+      symbol: 'ETH/USD', 
+      title: 'Ethereum',
+      currentPrice: 3456.78,
+      change: -89.45,
+      changePercent: -2.52
+    },
+    {
+      symbol: 'XAU/USD',
+      title: 'Gold',
+      currentPrice: 2012.45,
+      change: 15.67,
+      changePercent: 0.78
+    }
   ];
-  
-  // Mock data for risk assessment
-  const riskData = [
-    { name: 'Volatility', value: 65 },
-    { name: 'Correlation', value: 42 },
-    { name: 'Downside Risk', value: 38 },
-    { name: 'Sharpe Ratio', value: 78 },
-    { name: 'Liquidity', value: 85 },
-  ];
-  
-  // Mock data for portfolio distribution
-  const distributionData = [
-    { name: 'Large Cap', value: 55 },
-    { name: 'Mid Cap', value: 30 },
-    { name: 'Small Cap', value: 15 },
-  ];
-  
-  // Format stock data for the heatmap (treemap)
-  const stockGrowthData = mockStocks
-    .map(stock => ({
-      name: stock.symbol,
-      value: Math.abs(stock.changePercent),
-      changePercent: stock.changePercent
-    }))
-    .sort((a, b) => b.changePercent - a.changePercent);
-  
-  // Format cryptocurrency data for analysis
-  const cryptoData = mockCryptos
-    .map(crypto => ({
-      name: crypto.name,
-      symbol: crypto.symbol,
-      value: crypto.marketCap,
-      price: crypto.price,
-      change: crypto.changePercent,
-      marketCap: crypto.marketCap,
-      volume: crypto.volume
-    }))
-    .sort((a, b) => b.value - a.value);
-  
-  // Generate price history for Bitcoin and Ethereum
-  const [btcHistory, setBtcHistory] = useState(generatePriceHistory(30, 62000, 5));
-  const [ethHistory, setEthHistory] = useState(generatePriceHistory(30, 3200, 6));
-  
-  // Format historical data for charts
-  const btcHistoryData = btcHistory.map((price, index) => ({
-    day: index + 1,
-    price
-  }));
-  
-  const ethHistoryData = ethHistory.map((price, index) => ({
-    day: index + 1,
-    price
-  }));
-  
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
-  
-  // Custom content for the treemap
-  const CustomizedContent = (props: any) => {
-    const { root, depth, x, y, width, height, index, name, changePercent, value } = props;
-    
-    // Color based on change percent (green for positive, red for negative)
-    const color = changePercent >= 0 ? "#4ade80" : "#f87171";
-    const cellValue = changePercent >= 0 ? `+${changePercent.toFixed(2)}%` : `${changePercent.toFixed(2)}%`;
 
-    return (
-      <g>
-        <rect
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          style={{
-            fill: color,
-            stroke: '#fff',
-            strokeWidth: 2 / (depth + 1e-10),
-            strokeOpacity: 1 / (depth + 1e-10),
-          }}
-        />
-        {width > 50 && height > 30 ? (
-          <>
-            <text
-              x={x + width / 2}
-              y={y + height / 2 - 6}
-              textAnchor="middle"
-              fill="#fff"
-              fontSize={14}
-              fontWeight="bold"
-            >
-              {name}
-            </text>
-            <text
-              x={x + width / 2}
-              y={y + height / 2 + 12}
-              textAnchor="middle"
-              fill="#fff"
-              fontSize={12}
-            >
-              {cellValue}
-            </text>
-          </>
-        ) : null}
-      </g>
-    );
-  };
-  
   return (
-    <PageLayout title="Market Analysis">
-      {/* TradingView Style Charts Section */}
-      <div className="mb-8 space-y-6">
-        <TradingViewChart
-          symbol="BTC/USD"
-          title="Bitcoin"
-          currentPrice={67420.50}
-          change={1240.30}
-          changePercent={1.87}
-        />
-        
-        <TradingViewChart
-          symbol="ETH/USD"
-          title="Ethereum"
-          currentPrice={3205.80}
-          change={-85.20}
-          changePercent={-2.59}
-        />
-        
-        <TradingViewChart
-          symbol="XAU/USD"
-          title="Gold"
-          currentPrice={2015.40}
-          change={12.80}
-          changePercent={0.64}
-        />
-      </div>
+    <div className="min-h-screen gradient-background">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8 text-center">
+          <h1 className="text-5xl font-bold gradient-text mb-3 flex items-center justify-center gap-3">
+            <BarChart3 className="h-12 w-12 text-primary" />
+            Market Analysis
+          </h1>
+          <p className="text-muted-foreground text-lg">Advanced Candlestick Charts & Technical Analysis</p>
+          <div className="w-24 h-1 gradient-primary mx-auto mt-4 rounded-full"></div>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-card rounded-lg p-6 shadow">
-          <h2 className="text-xl font-semibold mb-4">Sector Performance (YTD)</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={sectorPerformance}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip formatter={(value) => [`${value}%`, 'Performance']} />
-                <Bar 
-                  dataKey="value" 
-                  name="YTD Performance" 
-                  fill="#8884d8"
-                  radius={[4, 4, 0, 0]}
-                >
-                  {sectorPerformance.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.value >= 0 ? '#4ade80' : '#f87171'} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+        {/* Market Overview Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {marketData.map((market, index) => (
+            <Card key={index} className="glass border-primary/30 glow-primary hover:scale-105 transition-all duration-300">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-xl flex items-center justify-between">
+                  <span className="gradient-text">{market.title}</span>
+                  <span className="text-sm text-muted-foreground bg-muted/30 px-2 py-1 rounded-lg">{market.symbol}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-3xl font-bold text-primary">${market.currentPrice.toLocaleString()}</div>
+                    <div className={`flex items-center gap-2 text-sm font-medium ${market.changePercent >= 0 ? 'text-success' : 'text-danger'}`}>
+                      {market.changePercent >= 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+                      {market.changePercent >= 0 ? '+' : ''}{market.change.toFixed(2)} ({market.changePercent >= 0 ? '+' : ''}{market.changePercent.toFixed(2)}%)
+                    </div>
+                  </div>
+                  <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center">
+                    <Activity className="h-6 w-6 text-white" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-        
-        <div className="lg:col-span-2 bg-card rounded-lg p-6 shadow">
-          <h2 className="text-xl font-semibold mb-4">Stock Performance Heatmap</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <Treemap
-                data={stockGrowthData}
-                dataKey="value"
-                aspectRatio={4/3}
-                stroke="#fff"
-                fill="#8884d8"
-                content={<CustomizedContent />}
+
+        {/* Candlestick Charts */}
+        <div className="space-y-8">
+          {marketData.map((market, index) => (
+            <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
+              <CandlestickChart
+                symbol={market.symbol}
+                title={market.title}
+                currentPrice={market.currentPrice}
+                change={market.change}
+                changePercent={market.changePercent}
               />
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-4 text-sm text-muted-foreground">
-            <p>Showing performance by percentage change. Green indicates positive growth, red indicates decline.</p>
-          </div>
-        </div>
-        
-        {/* Cryptocurrency Analysis Section */}
-        <div className="lg:col-span-2 mt-4">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Bitcoin className="text-orange-500" />
-            Cryptocurrency Analysis
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            {cryptoData.slice(0, 4).map((crypto) => (
-              <Card key={crypto.symbol} className="bg-card">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base flex justify-between">
-                    <span className="flex items-center gap-1">
-                      <span className="font-bold">{crypto.symbol}</span>
-                      <span className="text-muted-foreground text-sm">{crypto.name}</span>
-                    </span>
-                    {crypto.change >= 0 ? (
-                      <TrendingUp className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <TrendingDown className="h-4 w-4 text-red-500" />
-                    )}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">${crypto.price < 1 ? crypto.price.toFixed(4) : crypto.price.toFixed(2)}</div>
-                  <div className={`text-sm ${crypto.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                    {crypto.change >= 0 ? '+' : ''}{crypto.change.toFixed(2)}%
-                  </div>
-                  <div className="mt-2 text-xs text-muted-foreground">
-                    <div className="flex justify-between">
-                      <span>Volume:</span>
-                      <span>{formatNumber(crypto.volume)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Market Cap:</span>
-                      <span>{formatNumber(crypto.marketCap)}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="bg-card shadow">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bitcoin className="h-5 w-5 text-orange-500" />
-                  Bitcoin Price History (30 Days)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={btcHistoryData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-                      <XAxis dataKey="day" />
-                      <YAxis domain={['auto', 'auto']} />
-                      <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Price']} />
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                      <Line 
-                        type="monotone" 
-                        dataKey="price" 
-                        stroke="#f7931a" 
-                        strokeWidth={2}
-                        dot={false}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-card shadow">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="h-5 w-5 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs">Ξ</div>
-                  Ethereum Price History (30 Days)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={ethHistoryData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-                      <XAxis dataKey="day" />
-                      <YAxis domain={['auto', 'auto']} />
-                      <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Price']} />
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                      <Line 
-                        type="monotone" 
-                        dataKey="price" 
-                        stroke="#3c3c3d" 
-                        strokeWidth={2}
-                        dot={false}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <Card className="mt-6 bg-card shadow">
-            <CardHeader>
-              <CardTitle>Top Cryptocurrencies by Market Cap</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left py-3 px-4">#</th>
-                      <th className="text-left py-3 px-4">Name</th>
-                      <th className="text-right py-3 px-4">Price</th>
-                      <th className="text-right py-3 px-4">24h %</th>
-                      <th className="text-right py-3 px-4">Market Cap</th>
-                      <th className="text-right py-3 px-4">Volume (24h)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cryptoData.map((crypto, index) => (
-                      <tr key={crypto.symbol} className="border-b hover:bg-muted/50">
-                        <td className="py-3 px-4">{index + 1}</td>
-                        <td className="py-3 px-4 font-medium">
-                          <div className="flex items-center gap-2">
-                            <span className="font-semibold">{crypto.symbol}</span>
-                            <span className="text-muted-foreground">{crypto.name}</span>
-                          </div>
-                        </td>
-                        <td className="text-right py-3 px-4">
-                          ${crypto.price < 1 ? crypto.price.toFixed(4) : crypto.price.toFixed(2)}
-                        </td>
-                        <td className={`text-right py-3 px-4 ${crypto.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                          {crypto.change >= 0 ? '+' : ''}{crypto.change.toFixed(2)}%
-                        </td>
-                        <td className="text-right py-3 px-4">{formatNumber(crypto.marketCap)}</td>
-                        <td className="text-right py-3 px-4">{formatNumber(crypto.volume)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        <div className="bg-card rounded-lg p-6 shadow">
-          <h2 className="text-xl font-semibold mb-4">Risk Assessment</h2>
-          <div className="space-y-4">
-            {riskData.map((item) => (
-              <div key={item.name}>
-                <div className="flex justify-between text-sm mb-1">
-                  <span>{item.name}</span>
-                  <span className="font-medium">{item.value}/100</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className={`h-2 rounded-full ${
-                      item.value >= 70 ? 'bg-green-500' : item.value >= 40 ? 'bg-yellow-500' : 'bg-red-500'
-                    }`}
-                    style={{ width: `${item.value}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="bg-card rounded-lg p-6 shadow">
-          <h2 className="text-xl font-semibold mb-4">Market Capitalization Distribution</h2>
-          <div className="h-64 flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={distributionData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={true}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {distributionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value) => [`${value}%`, 'Allocation']} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        
-        <div className="bg-card rounded-lg p-6 shadow">
-          <h2 className="text-xl font-semibold mb-4">Technical Indicators</h2>
-          <div className="space-y-4">
-            <div className="flex justify-between p-3 border rounded-md">
-              <div>
-                <h3 className="font-medium">S&P 500</h3>
-                <p className="text-sm text-muted-foreground">Moving Averages</p>
-              </div>
-              <div className="text-right">
-                <p className="font-medium text-green-500">BUY</p>
-                <p className="text-sm">12 of 15 indicators</p>
-              </div>
             </div>
-            <div className="flex justify-between p-3 border rounded-md">
-              <div>
-                <h3 className="font-medium">Nasdaq</h3>
-                <p className="text-sm text-muted-foreground">Moving Averages</p>
-              </div>
-              <div className="text-right">
-                <p className="font-medium text-green-500">BUY</p>
-                <p className="text-sm">10 of 15 indicators</p>
-              </div>
-            </div>
-            <div className="flex justify-between p-3 border rounded-md">
-              <div>
-                <h3 className="font-medium">Dow Jones</h3>
-                <p className="text-sm text-muted-foreground">Moving Averages</p>
-              </div>
-              <div className="text-right">
-                <p className="font-medium text-yellow-500">NEUTRAL</p>
-                <p className="text-sm">8 of 15 indicators</p>
-              </div>
-            </div>
-            <div className="flex justify-between p-3 border rounded-md">
-              <div>
-                <h3 className="font-medium">Russell 2000</h3>
-                <p className="text-sm text-muted-foreground">Moving Averages</p>
-              </div>
-              <div className="text-right">
-                <p className="font-medium text-red-500">SELL</p>
-                <p className="text-sm">4 of 15 indicators</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
+};
 };
 
 export default Analysis;

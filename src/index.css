@@ -7,85 +7,25 @@
 
 @layer base {
   :root {
-    --background: 15 8% 8%;
-    --foreground: 320 15% 92%;
+    --background: 240 10% 8%;
+    --foreground: 280 15% 95%;
 
-    --card: 280 20% 12%;
-    --card-foreground: 320 15% 92%;
+    --card: 250 25% 12%;
+    --card-foreground: 280 15% 95%;
 
-    --popover: 280 20% 12%;
-    --popover-foreground: 320 15% 92%;
+    --popover: 250 25% 12%;
+    --popover-foreground: 280 15% 95%;
 
-    --primary: 280 60% 45%;
+    --primary: 260 80% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 65% 35%;
+    --secondary: 280 70% 50%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 280 15% 18%;
-    --muted-foreground: 280 8% 65%;
+    --muted: 250 20% 18%;
+    --muted-foreground: 250 10% 70%;
 
-    --accent: 320 70% 25%;
-    --accent-foreground: 320 15% 92%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --success: 142 72% 52%;
-    --success-foreground: 0 0% 100%;
-
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-
-    --danger: 0 84% 60%;
-    --danger-foreground: 0 0% 100%;
-
-    --border: 280 15% 25%;
-    --input: 280 15% 20%;
-    --ring: 280 60% 45%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 280 25% 8%;
-    --sidebar-foreground: 320 15% 92%;
-    --sidebar-primary: 280 60% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 280 20% 15%;
-    --sidebar-accent-foreground: 320 15% 92%;
-    --sidebar-border: 280 20% 15%;
-    --sidebar-ring: 280 60% 45%;
-
-    /* Custom gradient tokens for beautiful effects */
-    --gradient-primary: linear-gradient(135deg, hsl(280 60% 45%), hsl(320 70% 50%));
-    --gradient-secondary: linear-gradient(135deg, hsl(0 65% 35%), hsl(0 75% 45%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 60% 25%), hsl(320 70% 35%));
-    --gradient-background: linear-gradient(180deg, hsl(15 8% 8%), hsl(280 20% 6%));
-    
-    /* Glow effects */
-    --glow-primary: 0 0 30px hsl(280 60% 45% / 0.3);
-    --glow-secondary: 0 0 30px hsl(0 65% 35% / 0.3);
-  }
-
-  .dark {
-    --background: 15 8% 6%;
-    --foreground: 320 15% 92%;
-
-    --card: 280 25% 10%;
-    --card-foreground: 320 15% 92%;
-
-    --popover: 280 25% 10%;
-    --popover-foreground: 320 15% 92%;
-
-    --primary: 280 70% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 75% 40%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 280 20% 15%;
-    --muted-foreground: 280 10% 70%;
-
-    --accent: 320 80% 30%;
+    --accent: 240 75% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -100,19 +40,79 @@
     --danger: 0 84% 60%;
     --danger-foreground: 0 0% 100%;
 
-    --border: 280 20% 20%;
-    --input: 280 20% 18%;
-    --ring: 280 70% 50%;
+    --border: 250 25% 25%;
+    --input: 250 25% 20%;
+    --ring: 260 80% 65%;
 
-    /* Enhanced gradients for dark mode */
-    --gradient-primary: linear-gradient(135deg, hsl(280 70% 50%), hsl(320 80% 55%));
-    --gradient-secondary: linear-gradient(135deg, hsl(0 75% 40%), hsl(0 85% 50%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 70% 30%), hsl(320 80% 40%));
-    --gradient-background: linear-gradient(180deg, hsl(15 8% 6%), hsl(280 25% 4%));
+    --radius: 0.5rem;
+
+    --sidebar-background: 250 30% 8%;
+    --sidebar-foreground: 280 15% 95%;
+    --sidebar-primary: 260 80% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 250 30% 15%;
+    --sidebar-accent-foreground: 280 15% 95%;
+    --sidebar-border: 250 30% 15%;
+    --sidebar-ring: 260 80% 65%;
+
+    /* Custom gradient tokens for beautiful purple/blue effects */
+    --gradient-primary: linear-gradient(135deg, hsl(260 80% 65%), hsl(240 75% 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(280 70% 50%), hsl(260 80% 65%));
+    --gradient-accent: linear-gradient(135deg, hsl(240 75% 60%), hsl(220 85% 65%));
+    --gradient-background: linear-gradient(180deg, hsl(240 10% 8%), hsl(250 25% 6%));
     
-    /* Enhanced glow effects for dark mode */
-    --glow-primary: 0 0 40px hsl(280 70% 50% / 0.4);
-    --glow-secondary: 0 0 40px hsl(0 75% 40% / 0.4);
+    /* Enhanced glow effects for purple/blue theme */
+    --glow-primary: 0 0 40px hsl(260 80% 65% / 0.4);
+    --glow-secondary: 0 0 40px hsl(240 75% 60% / 0.4);
+  }
+
+  .dark {
+    --background: 240 15% 6%;
+    --foreground: 280 15% 95%;
+
+    --card: 250 30% 10%;
+    --card-foreground: 280 15% 95%;
+
+    --popover: 250 30% 10%;
+    --popover-foreground: 280 15% 95%;
+
+    --primary: 260 85% 70%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 280 75% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 250 25% 15%;
+    --muted-foreground: 250 15% 75%;
+
+    --accent: 240 80% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 72% 52%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --danger: 0 84% 60%;
+    --danger-foreground: 0 0% 100%;
+
+    --border: 250 30% 20%;
+    --input: 250 30% 18%;
+    --ring: 260 85% 70%;
+
+    /* Enhanced gradients for dark purple/blue theme */
+    --gradient-primary: linear-gradient(135deg, hsl(260 85% 70%), hsl(240 80% 65%));
+    --gradient-secondary: linear-gradient(135deg, hsl(280 75% 55%), hsl(260 85% 70%));
+    --gradient-accent: linear-gradient(135deg, hsl(240 80% 65%), hsl(220 90% 70%));
+    --gradient-background: linear-gradient(180deg, hsl(240 15% 6%), hsl(250 30% 4%));
+    
+    /* Enhanced glow effects for dark purple/blue theme */
+    --glow-primary: 0 0 50px hsl(260 85% 70% / 0.5);
+    --glow-secondary: 0 0 50px hsl(240 80% 65% / 0.5);
   }
 }
 

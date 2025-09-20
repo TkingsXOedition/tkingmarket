@@ -22,7 +22,7 @@ const ThemeProviderContext = React.createContext<ThemeProviderState>(initialStat
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark", // Default to dark theme
+  defaultTheme = "dark", // Force dark theme always
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
